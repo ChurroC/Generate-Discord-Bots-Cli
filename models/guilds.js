@@ -1,14 +1,17 @@
 const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
-    discordId: {
+    guildId: {
         type: Number,
         required: true,
         unique: true
     },
-    pingCount: {
-        type: Number
+    prefix: {
+        type: String
     }
 })
 
-module.exports = mongoose.model('Template', schema)
+module.exports = {
+    cmdName: 'guilds',
+    model: mongoose.model('Guilds', schema)
+}

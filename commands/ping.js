@@ -1,17 +1,15 @@
+//Example of using database and replies
 module.exports = {
     name: 'ping',
     discription: 'Replies with Pong!',
-    async execute(message, args, db) {
+    async execute(message, args, client) {
         message.reply('Pong!');
-        const user = await db.findOne({ discordId: message.author.id });
+        const user = await client.database.members.findOne({ discordId: message.author.id });
         if (user) {
             user.pingCount++;
-            await user.save();
+            user.save();
         } else {
-            await new db({ discordId: message.author.id, pingCount: 1}).save();
+            await new client.database.members.model({ discordId: message.author.id, pingCount: 1}).save();
         }
-        //eval(args[0]);
-        //console.log(args[0]);
-        //(()=>{message.channel.send("fgyuigyug" + "<@774373664149078056>")})();
     }
 }
