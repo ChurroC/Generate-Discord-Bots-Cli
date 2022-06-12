@@ -9,7 +9,7 @@ module.exports = {
             user.pingCount++;
             user.save();
         } else {
-            await new client.database.members.model({ discordId: message.author.id, pingCount: 1}).save();
+            await new client.database.members({ discordId: message.author.id, pingCount: 1}).save();
         }
     }
 }
