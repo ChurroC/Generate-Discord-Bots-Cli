@@ -6,7 +6,8 @@ module.exports = {
             if (guild) {
                 message.guild.prefix = guild.prefix;
             } else {
-                await client.database.guilds.create({ guildId: message.guild.id, prefix: '!' }).save();
+                const newGuild = await client.database.guilds.create({ guildId: message.guild.id, prefix: '!' })
+                await newguild.save();
                 message.guild.prefix = '!';
             }
         }
