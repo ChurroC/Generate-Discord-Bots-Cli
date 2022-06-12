@@ -17,7 +17,8 @@ module.exports = {
             if (guild) {
                 interaction.guild.prefix = guild.prefix;
             } else {
-                await client.database.guilds.create({ guildId: interaction.guildId, prefix: '!' }).save();
+                const newGuild = await client.database.guilds.create({ guildId: interaction.guildId, prefix: '!' })
+                await newGuild.save();
                 interaction.guild.prefix = '!';
             }
         }
