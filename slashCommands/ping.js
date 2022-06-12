@@ -9,7 +9,7 @@ module.exports = {
         await interaction.reply('Pong!')
         const user = await client.database.members.findOne({ discordId: interaction.member.id });
         if (user) {
-            user.pingCount++;
+            user.pingCount = parseInt(user.pingCount) + 1;
             user.save();
         } else {
             await new client.database.members({ discordId: interaction.member.id, pingCount: 1}).save();

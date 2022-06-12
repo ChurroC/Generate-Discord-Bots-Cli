@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const schema = new mongoose.Schema({
+const Schema = new mongoose.Schema({
     guildId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
@@ -13,5 +13,5 @@ const schema = new mongoose.Schema({
 
 module.exports = {
     cmdName: 'guilds',
-    model: mongoose.model('Guilds', schema)
+    model: mongoose.model('Guilds', Schema)
 }
