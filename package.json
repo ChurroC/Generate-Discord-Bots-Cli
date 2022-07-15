@@ -7,9 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config index.js",
     "deploy": "node deploy-commands.js",
-    "deployDev": "node -r dotenv/config deploy-commands.js",
+    "deployDev": "nodemon --watch slashCommands -r dotenv/config deploy-commands.js",
     "fullStart": "npm run deploy && npm run start",
-    "fullDevStart": "npm run deployDev && npm run dev"
+    "fullDevStart": "concurrently \"npm run deployDev\" \"npm run dev\" "
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,7 @@
     "mongoose": "^6.3.6"
   },
   "devDependencies": {
+    "concurrently": "^7.2.2",
     "dotenv": "^16.0.1",
     "nodemon": "^2.0.16"
   }
