@@ -1,6 +1,6 @@
 module.exports = {
     name: 'prefix',
-    discription: 'Changes the prefix of the bot for that guild.',
+    description: 'Changes the prefix of the bot for that guild.',
     async execute(message, args, client) {
         const newPrefix = args[0];
 

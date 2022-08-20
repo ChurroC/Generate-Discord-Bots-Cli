@@ -1,18 +1,19 @@
-const { SlashCommandBuilder } = require('@discordjs/builders')
+const { SlashCommandBuilder } = require('discord.js');
 
 //Example of using database and replies
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
-        .setDescription('Replies with Pong!'),
+        .setDescription('Replies with Pong!')
+        .setDMPermission(true),
     async execute(interaction, client) {
-        await interaction.reply('Pong!')
+        interaction.reply('Pong!')
         const user = await client.database.members.findOne({ discordId: interaction.member.id });
         if (user) {
             user.pingCount = parseInt(user.pingCount) + 1;
             user.save();
         } else {
-            await new client.database.members({ discordId: interaction.member.id, pingCount: 1}).save();
+            new client.database.members({ discordId: interaction.member.id, pingCount: 1}).save();
         }
     }
 }

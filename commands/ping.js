@@ -1,7 +1,7 @@
 //Example of using database and replies
 module.exports = {
     name: 'ping',
-    discription: 'Replies with Pong!',
+    description: 'Replies with Pong!',
     async execute(message, args, client) {
         message.reply('Pong!');
         const user = await client.database.members.findOne({ discordId: message.author.id });
