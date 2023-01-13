@@ -2,3 +2,5 @@ This is a simple way to start to build a discord bot. All you have to do is just
 
 Still have to add embeds.
 Have to add comments.
+
+Also have database or cache mode
