@@ -1,12 +1,9 @@
 module.exports = {
-    name: 'interactionCreate',
+    name: 'isButton',
     async execute(interaction, client) {
         if (interaction.isChatInputCommand()) {
             const command =  client.slashCommands.get(interaction.commandName);
-            if (!command) {
-                console.error(`No command matching ${interaction.commandName} was found.`);
-                return;
-            };
+            if (!command) return;
         
             try {
                 await command.execute(interaction, client);

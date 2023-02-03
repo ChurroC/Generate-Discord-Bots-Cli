@@ -1,6 +1,6 @@
 module.exports = {
     name: 'messageCreate',
-    async execute(message, client) {
+    async execute(message, client, db) {
         if (!message.guild.prefix){ // Load prefix into cache 
             const guild = await client.database.guilds.findOne({ guildId: message.guild.id });
             if (guild) {
@@ -30,7 +30,7 @@ module.exports = {
         if (!command) return;
     
         try {
-            command.execute(message, args, client);
+            command.execute(message, args, client, db);
         } catch (err) {
             console.error(err);
             message.reply('there was an error trying to execute that command!');
