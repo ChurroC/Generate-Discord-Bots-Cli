@@ -20,10 +20,10 @@ const client = new Client({
 const modelPath = path.join(__dirname, 'models');
 const modelFiles = fs
     .readdirSync(modelPath)
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
 client.database = {};
 
-modelFiles.forEach((file) => {
+modelFiles.forEach(file => {
     const models = require(path.join(modelPath, file));
     client.database[models.cmdName] = models.model;
 });
@@ -31,7 +31,7 @@ modelFiles.forEach((file) => {
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(console.log('Connected to MongoDB'))
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 
 //Slash Commands
 //Use client.slashCommands.get(commandName) to get the command.
@@ -39,9 +39,9 @@ client.slashCommands = new Collection();
 const slashCommandsPath = path.join(__dirname, 'slashCommands');
 const slashCommandFiles = fs
     .readdirSync(slashCommandsPath)
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
 
-slashCommandFiles.forEach((file) => {
+slashCommandFiles.forEach(file => {
     const filePath = path.join(slashCommandsPath, file);
     const command = require(path.join(filePath));
     // Set a new item in the Collection
@@ -61,9 +61,9 @@ client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
 
-commandFiles.forEach((file) => {
+commandFiles.forEach(file => {
     const filePath = path.join(commandsPath, file);
     const command = require(path.join(filePath));
     // Set a new item in the Collection
@@ -81,9 +81,9 @@ commandFiles.forEach((file) => {
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs
     .readdirSync(eventsPath)
-    .filter((file) => file.endsWith('.js'));
+    .filter(file => file.endsWith('.js'));
 
-eventFiles.forEach((file) => {
+eventFiles.forEach(file => {
     const event = require(path.join(eventsPath, file));
     if (event.once)
         client.once(event.name, (...args) => event.execute(...args, client));

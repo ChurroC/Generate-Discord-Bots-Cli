@@ -1,4 +1,5 @@
 .prettierrc
+.prettierignore
 
 # Logs
 logs
