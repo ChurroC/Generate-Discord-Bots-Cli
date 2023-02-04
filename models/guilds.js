@@ -4,14 +4,14 @@ const Schema = new mongoose.Schema({
     guildId: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     prefix: {
-        type: String
-    }
+        type: String,
+    },
 })
 
 module.exports = {
     cmdName: 'guilds',
-    model: mongoose.model('Guilds', Schema)
+    model: mongoose.model('Guilds', Schema),
 }

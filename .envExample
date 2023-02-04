@@ -1,0 +1,5 @@
+ENV=Development (or Production)
+BOT_TOKEN=BOT_TOKEN_HERE (Bot token)
+CLIENT_ID=CLIENT_ID_HERE (Id of the bot)
+GUILD_ID=GUILD_ID_HERE (Id of the dev server)
+MONGODB_URI=MONGODB_URI_HERE (MongoDB connection string)

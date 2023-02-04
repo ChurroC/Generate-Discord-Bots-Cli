@@ -1,3 +1,5 @@
+.prettierrc
+
 # Logs
 logs
 *.log

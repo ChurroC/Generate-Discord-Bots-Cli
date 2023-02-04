@@ -4,14 +4,14 @@ const Schema = new mongoose.Schema({
     discordId: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     pingCount: {
-        type: String
-    }
+        type: String,
+    },
 })
 
 module.exports = {
     cmdName: 'members',
-    model: mongoose.model('Members', Schema)
+    model: mongoose.model('Members', Schema),
 }
