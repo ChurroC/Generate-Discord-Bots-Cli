@@ -1,0 +1,25 @@
+{
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "proseWrap": "always",
+    "tabWidth": 4,
+    "editor.formatOnSave": true,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "events/ready.js",
+            "options": {
+                "printWidth": 200
+            }
+        }
+    ]
+}

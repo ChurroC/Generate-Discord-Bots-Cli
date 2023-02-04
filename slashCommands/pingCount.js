@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js');
 
 //Example of using database and replies
 module.exports = {
@@ -10,9 +10,9 @@ module.exports = {
     async execute(interaction, client) {
         const times = await client.database.members.findOne({
             id: interaction.member.id,
-        })
+        });
         await interaction.reply(
             `I have ponged your ping ${times.pingCount} times.`
-        )
+        );
     },
-}
+};

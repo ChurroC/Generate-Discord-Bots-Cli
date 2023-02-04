@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const mongoose = require('mongoose');
+const { PrismaClient } = require('@prisma/client');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
 //Client
@@ -15,23 +15,25 @@ const client = new Client({
 });
 
 //Database
-//Use client.database.(whatever database name you want) to access the database.
+//Use client.database."model name" to access the database.
 //For example you could make a schema for bot information and name it botInfo and use client.database.botInfo to access it.
-const modelPath = path.join(__dirname, 'models');
-const modelFiles = fs
-    .readdirSync(modelPath)
-    .filter(file => file.endsWith('.js'));
-client.database = {};
 
-modelFiles.forEach(file => {
-    const models = require(path.join(modelPath, file));
-    client.database[models.cmdName] = models.model;
-});
+// const prisma = new PrismaClient();
+// const modelPath = path.join(__dirname, 'models');
+// const modelFiles = fs
+//     .readdirSync(modelPath)
+//     .filter(file => file.endsWith('.js'));
+client.db = new PrismaClient();
 
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(console.log('Connected to MongoDB'))
-    .catch(err => console.log(err));
+// modelFiles.forEach(file => {
+//     const models = require(path.join(modelPath, file));
+//     client.database[models.cmdName] = models.model;
+// });
+
+// mongoose
+//     .connect(process.env.MONGODB_URI)
+//     .then(console.log('Connected to MongoDB'))
+//     .catch(err => console.log(err));
 
 //Slash Commands
 //Use client.slashCommands.get(commandName) to get the command.
@@ -69,7 +71,7 @@ commandFiles.forEach(file => {
     // Set a new item in the Collection
     // With the key as the command name and the value as the exported module
     if ('name' in command && 'execute' in command) {
-        client.slashCommands.set(command.name, command);
+        client.commands.set(command.name, command);
     } else {
         console.log(
             `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
@@ -85,12 +87,11 @@ const eventFiles = fs
 
 eventFiles.forEach(file => {
     const event = require(path.join(eventsPath, file));
-    if (event.once)
+    if (event.once) {
         client.once(event.name, (...args) => event.execute(...args, client));
-    else
-        client.on(event.name, (...args) =>
-            event.execute(...args, client, client.database)
-        );
+    } else {
+        client.on(event.name, (...args) => event.execute(...args, client));
+    }
 });
 
 //Login

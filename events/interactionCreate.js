@@ -1,21 +1,32 @@
+const {
+    Events: { InteractionCreate },
+} = require('discord.js');
+
 module.exports = {
-    name: 'interactionCreate',
+    name: InteractionCreate,
     async execute(interaction, client) {
         if (interaction.isChatInputCommand()) {
-            const command = client.slashCommands.get(interaction.commandName)
+            const command = client.slashCommands.get(
+                process.env.ENV !== 'production'
+                    ? interaction.commandName.slice(0, -4)
+                    : interaction.commandName
+            );
             if (!command) {
-                console.error(`No command matching ${interaction.commandName} was found.`)
-                return
+                console.error(
+                    `No command matching ${interaction.commandName} was found.`
+                );
+                return;
             }
 
             try {
-                await command.execute(interaction, client)
+                await command.execute(interaction, client);
             } catch (err) {
-                console.error(err)
+                console.error(err);
                 interaction.reply({
-                    content: 'There was an error trying to execute that command!',
+                    content:
+                        'There was an error trying to execute that command!',
                     ephemeral: true,
-                })
+                });
             }
         } else if (interaction.isButton()) {
         } else if (interaction.isSelectMenu()) {
@@ -24,4 +35,4 @@ module.exports = {
         } else if (interaction.isModalClose()) {
         }
     },
-}
+};

@@ -8,9 +8,12 @@ module.exports = {
         .setDMPermission(true),
     async execute(interaction, client) {
         interaction.reply('Pong!');
-        const user = await client.database.members.findOne({
-            discordId: interaction.member.id,
+        const user = await client.db.Template.findUnique({
+            where: {
+                memberId: interaction.member.id,
+            },
         });
+        console.log(user);
         if (user) {
             user.pingCount = parseInt(user.pingCount) + 1;
             user.save();
