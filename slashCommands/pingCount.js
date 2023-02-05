@@ -7,12 +7,12 @@ module.exports = {
         .setDescription(
             'Shows how many times you have played ping pong with the bot.'
         ),
-    async execute(interaction, client) {
-        const times = await client.database.members.findOne({
-            id: interaction.member.id,
+    async execute(interaction, client, db) {
+        const { pingCount } = await db.member.findUnique({
+            where: {
+                memberId: interaction.member.id,
+            },
         });
-        await interaction.reply(
-            `I have ponged your ping ${times.pingCount} times.`
-        );
+        interaction.reply(`I have ponged your ping ${pingCount} times.`);
     },
 };

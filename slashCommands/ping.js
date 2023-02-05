@@ -6,22 +6,21 @@ module.exports = {
         .setName('ping')
         .setDescription('Replies with Pong!')
         .setDMPermission(true),
-    async execute(interaction, client) {
-        interaction.reply('Pong!');
-        const user = await client.db.Template.findUnique({
+    async execute(interaction, client, db) {
+        interaction.reply(
+            `Pong!\nLatency is ${
+                Date.now() - interaction.createdTimestamp
+            }ms. API Latency is ${Math.round(client.ws.ping)}ms`
+        );
+        await db.member.update({
             where: {
                 memberId: interaction.member.id,
             },
+            data: {
+                pingCount: {
+                    increment: 1,
+                },
+            },
         });
-        console.log(user);
-        if (user) {
-            user.pingCount = parseInt(user.pingCount) + 1;
-            user.save();
-        } else {
-            new client.database.members({
-                discordId: interaction.member.id,
-                pingCount: 1,
-            }).save();
-        }
     },
 };

@@ -17,23 +17,7 @@ const client = new Client({
 //Database
 //Use client.database."model name" to access the database.
 //For example you could make a schema for bot information and name it botInfo and use client.database.botInfo to access it.
-
-// const prisma = new PrismaClient();
-// const modelPath = path.join(__dirname, 'models');
-// const modelFiles = fs
-//     .readdirSync(modelPath)
-//     .filter(file => file.endsWith('.js'));
 client.db = new PrismaClient();
-
-// modelFiles.forEach(file => {
-//     const models = require(path.join(modelPath, file));
-//     client.database[models.cmdName] = models.model;
-// });
-
-// mongoose
-//     .connect(process.env.MONGODB_URI)
-//     .then(console.log('Connected to MongoDB'))
-//     .catch(err => console.log(err));
 
 //Slash Commands
 //Use client.slashCommands.get(commandName) to get the command.
@@ -88,11 +72,15 @@ const eventFiles = fs
 eventFiles.forEach(file => {
     const event = require(path.join(eventsPath, file));
     if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args, client));
+        client.once(event.name, (...args) =>
+            event.execute(...args, client, client.db)
+        );
     } else {
-        client.on(event.name, (...args) => event.execute(...args, client));
+        client.on(event.name, (...args) =>
+            event.execute(...args, client, client.db)
+        );
     }
 });
 
 //Login
-client.login(process.env.BOT_TOKEN);
+client.login();

@@ -7,21 +7,20 @@ module.exports = {
     name: MessageCreate,
     async execute(message, client, db) {
         if (message.author.bot) return;
+
+        // Add guild to db
         if (!message.guild.prefix) {
             // Load prefix into cache
-            const guild = await client.database.guilds.findOne({
-                guildId: message.guild.id,
-            });
-            if (guild) {
-                message.guild.prefix = guild.prefix;
-            } else {
-                const newGuild = await client.database.guilds.create({
+            const guild = await db.guild.upsert({
+                where: {
                     guildId: message.guild.id,
-                    prefix: '!',
-                });
-                newGuild.save();
-                message.guild.prefix = '!';
-            }
+                },
+                update: {},
+                create: {
+                    guildId: message.guild.id,
+                },
+            });
+            message.guild.prefix = guild.prefix;
         }
         const prefix = message.guild.prefix;
 
@@ -31,6 +30,23 @@ module.exports = {
                 `<@${client.user.id}>`
         )
             return;
+
+        if (message.content === `<@${client.user.id}>`) {
+            return message.reply(`The prefix is ${prefix}`);
+        }
+
+        // Add member to db
+        if (client.users.cache.get(message.member.id)) {
+            await db.member.upsert({
+                where: {
+                    memberId: message.member.id,
+                },
+                update: {},
+                create: {
+                    memberId: message.member.id,
+                },
+            });
+        }
 
         let args;
         //First take out the prefix. Then take out blank spaces at the end. Then turn into an array that is split between blanck spaces.

@@ -10,13 +10,13 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Guilds {
+model Guild {
     id      String @id @default(auto()) @map("_id") @db.ObjectId
     guildId String @unique
     prefix  String @default("!")
 }
 
-model Members {
+model Member {
     id        String @id @default(auto()) @map("_id") @db.ObjectId
     memberId  String @unique
     pingCount Int    @default(0)

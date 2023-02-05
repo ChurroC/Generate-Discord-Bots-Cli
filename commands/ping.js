@@ -2,19 +2,21 @@
 module.exports = {
     name: 'ping',
     description: 'Replies with Pong!',
-    async execute(message, args, client) {
-        message.reply('Pong!');
-        const user = await client.database.members.findOne({
-            discordId: message.author.id,
+    async execute(message, args, client, db) {
+        message.reply(
+            `Pong!\nLatency is ${
+                Date.now() - message.createdTimestamp
+            }ms. API Latency is ${Math.round(client.ws.ping)}ms`
+        );
+        await db.member.update({
+            where: {
+                memberId: message.member.id,
+            },
+            data: {
+                pingCount: {
+                    increment: 1,
+                },
+            },
         });
-        if (user) {
-            user.pingCount = parseInt(user.pingCount) + 1;
-            user.save();
-        } else {
-            await new client.database.members({
-                discordId: message.author.id,
-                pingCount: 1,
-            }).save();
-        }
     },
 };

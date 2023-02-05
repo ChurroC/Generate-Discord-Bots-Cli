@@ -5,7 +5,7 @@ const {
 module.exports = {
     name: ClientReady,
     once: true,
-    execute(client) {
+    async execute(client) {
         const onlineStatus = `${client.user.username} is online!`;
         console.log('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓');
         console.log('┃                                                                  ┃');

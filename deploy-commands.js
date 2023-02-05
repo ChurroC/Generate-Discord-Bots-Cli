@@ -27,10 +27,9 @@ commandFiles.forEach(file => {
         );
     }
 });
-console.log(commands);
 
 // Construct and prepare an instance of the REST module
-const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 // and deploy your commands!
 (async () => {
