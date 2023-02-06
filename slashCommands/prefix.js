@@ -33,9 +33,6 @@ module.exports = {
             },
         });
         interaction.guild.prefix = newPrefix;
-        interaction.reply({
-            content: `The prefix has been changed to ${newPrefix}`,
-            ephemeral: true,
-        });
+        interaction.reply(`The prefix has been changed to ${newPrefix}`);
     },
 };

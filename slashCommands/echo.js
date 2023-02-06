@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, ChannelType } = require('discord.js');
 
 //Example of using database and replies
 module.exports = {
@@ -13,19 +13,26 @@ module.exports = {
                 .setMaxLength(2000)
         )
         .addChannelOption(option =>
-            option.setName('channel').setDescription('The channel to echo into')
+            option
+                .setName('channel')
+                .setDescription('The channel to echo into')
+                .addChannelTypes(ChannelType.GuildText)
         )
         .addBooleanOption(option =>
             option
                 .setName('ephemeral')
                 .setDescription('Whether or not the echo should be ephemeral')
         ),
-    async execute(interaction, client, db) {
+    async execute(interaction) {
         const input = interaction.options.getString('input');
         const channel = interaction.options.getChannel('channel');
         const ephemeral = interaction.options.getBoolean('ephemeral');
         if (channel) {
-            channel.send(input);
+            channel.send({
+                content:
+                    input + ' (Echoed by ' + interaction.user.username + ')',
+                ephemeral,
+            });
             interaction.reply({
                 content: `"${input}" has been echoed in <#${channel.id}>`,
                 ephemeral: true,

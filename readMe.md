@@ -8,3 +8,5 @@ Still have to add embeds. Have to add comments.
 Also have database or cache mode
 
 Like on vs once add a dev so only use that during deelopment guild ocmmands
+
+Add a musivoic option
