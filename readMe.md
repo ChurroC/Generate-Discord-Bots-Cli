@@ -10,3 +10,12 @@ Also have database or cache mode
 Like on vs once add a dev so only use that during deelopment guild ocmmands
 
 Add a musivoic option
+
+Add a button that creates a new buttion layer and you can dd and rmeoe button
+rows first one wiill have a add new row the rest will have remove a row and add
+a row
+
+make some normal commands have array of names to have mutlple names viunded to
+noe function.
+
+Use a collector to see who says hi first

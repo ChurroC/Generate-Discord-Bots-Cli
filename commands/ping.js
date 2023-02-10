@@ -1,7 +1,7 @@
 //Example of using database and replies
 module.exports = {
-    name: 'ping',
-    description: 'Replies with Pong!',
+    name: ["ping", "p"],
+    description: "Replies with Pong!",
     async execute(message, args, client, db) {
         message.reply(
             `Pong!\nLatency is ${

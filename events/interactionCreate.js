@@ -1,6 +1,6 @@
 const {
     Events: { InteractionCreate },
-} = require('discord.js');
+} = require("discord.js");
 
 module.exports = {
     name: InteractionCreate,
@@ -34,10 +34,11 @@ module.exports = {
 
         if (interaction.isChatInputCommand()) {
             const command = client.slashCommands.get(
-                process.env.ENV !== 'production'
+                process.env.ENV !== "production"
                     ? interaction.commandName.slice(0, -4)
                     : interaction.commandName
             );
+
             if (!command) {
                 console.error(
                     `No command matching ${interaction.commandName} was found.`
@@ -51,11 +52,41 @@ module.exports = {
                 console.error(err);
                 interaction.reply({
                     content:
-                        'There was an error trying to execute that command!',
+                        "There was an error trying to execute that command!",
                     ephemeral: true,
                 });
             }
         } else if (interaction.isButton()) {
+            console.log(interaction.customId);
+            console.log(interaction.component);
+            console.log(interaction.id);
+            console.log();
+            const command = client.slashCommands.get(
+                process.env.ENV !== "production"
+                    ? interaction.message.interaction.commandName.slice(0, -4)
+                    : interaction.message.interaction.commandName
+            );
+
+            if (!command) {
+                console.error(
+                    `No button for ${interaction.message.interaction.commandName} was found.`
+                );
+                return;
+            }
+
+            try {
+                await command[interaction.customId + "Button"](
+                    interaction,
+                    client,
+                    db
+                );
+            } catch (err) {
+                console.error(err);
+                interaction.reply({
+                    content: "There was an error trying to press that button!",
+                    ephemeral: true,
+                });
+            }
         } else if (interaction.isSelectMenu()) {
         } else if (interaction.isAutocomplete()) {
         } else if (interaction.isModalSubmit()) {
