@@ -19,3 +19,5 @@ make some normal commands have array of names to have mutlple names viunded to
 noe function.
 
 Use a collector to see who says hi first
+
+add a cli comamdn to convert to sharding easy.
