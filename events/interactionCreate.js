@@ -57,10 +57,6 @@ module.exports = {
                 });
             }
         } else if (interaction.isButton()) {
-            console.log(interaction.customId);
-            console.log(interaction.component);
-            console.log(interaction.id);
-            console.log();
             const command = client.slashCommands.get(
                 process.env.ENV !== "production"
                     ? interaction.message.interaction.commandName.slice(0, -4)
@@ -83,7 +79,7 @@ module.exports = {
             } catch (err) {
                 console.error(err);
                 interaction.reply({
-                    content: "There was an error trying to press that button!",
+                    content: "There was an error trying to run the button!",
                     ephemeral: true,
                 });
             }
