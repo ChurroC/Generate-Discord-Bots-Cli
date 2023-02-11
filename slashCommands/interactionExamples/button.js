@@ -7,24 +7,24 @@ const {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("test")
+        .setName("button")
         .setDescription("Replies with Pong!")
         .setDMPermission(true),
-    async execute(interaction, client, db) {
+    async execute(interaction) {
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setCustomId("primary")
-                .setLabel("Click me!")
+                .setLabel("I am a button!")
                 .setStyle(Primary),
             new ButtonBuilder()
-                .setCustomId("wow")
-                .setLabel("Click me!")
+                .setCustomId("hi_button")
+                .setLabel("I say hi!")
                 .setStyle(Secondary)
         );
         const row2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId("three")
-                .setLabel("Click me!")
+                .setCustomId("destruction")
+                .setLabel("Destroy all buttons!")
                 .setStyle(Danger)
         );
         interaction.reply({
@@ -32,13 +32,16 @@ module.exports = {
             components: [row, row2],
         });
     },
-    async primaryButton(interaction, client, db) {
-        interaction.reply("Primary button clicked!");
-    },
-    async wowButton(interaction, client, db) {
-        interaction.reply("Secondary button clicked!");
-    },
-    async threeButton(interaction, client, db) {
-        interaction.reply("Danger button clicked!");
+    button: {
+        async primary(interaction) {
+            interaction.reply("Button clicked!");
+        },
+        // Also hi_button works
+        async hiButton(interaction) {
+            interaction.reply(`Hi ${interaction.user.username}!`);
+        },
+        async destruction(interaction) {
+            interaction.update({ components: [] });
+        },
     },
 };

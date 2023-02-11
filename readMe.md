@@ -21,3 +21,6 @@ noe function.
 Use a collector to see who says hi first
 
 add a cli comamdn to convert to sharding easy.
+
+Maybe move name from query_version so you have to do this:
+query_versionAutoComplete to be able to use camelcase queryVersionAutoComplete
