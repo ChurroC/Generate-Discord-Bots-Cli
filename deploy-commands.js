@@ -16,7 +16,9 @@ commandFiles.forEach(filePath => {
 
     if (process.env.ENV !== "production") {
         command.data.name = `${command.data.name}_dev`;
-        command.data.description = `${command.data.description} (dev)`;
+        command.data.description = command.data.description
+            ? `${command.data.description} (dev)`
+            : null;
     }
 
     if ("data" in command && "execute" in command) {

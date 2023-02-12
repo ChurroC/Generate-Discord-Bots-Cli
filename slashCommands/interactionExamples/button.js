@@ -8,7 +8,7 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("button")
-        .setDescription("Replies with Pong!")
+        .setDescription("Creates a button!")
         .setDMPermission(true),
     async execute(interaction) {
         const row = new ActionRowBuilder().addComponents(
@@ -23,7 +23,7 @@ module.exports = {
         );
         const row2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId("destruction")
+                .setCustomId("destruction_button")
                 .setLabel("Destroy all buttons!")
                 .setStyle(Danger)
         );
@@ -40,7 +40,7 @@ module.exports = {
         async hiButton(interaction) {
             interaction.reply(`Hi ${interaction.user.username}!`);
         },
-        async destruction(interaction) {
+        async destruction_button(interaction) {
             interaction.update({ components: [] });
         },
     },

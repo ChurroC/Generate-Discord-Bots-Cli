@@ -14,9 +14,9 @@ module.exports = {
     async execute(interaction) {
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId("select")
+                .setCustomId("select_id")
                 .setPlaceholder("Nothing selected")
-                .setMinValues(2)
+                .setMinValues(1)
                 .setMaxValues(3)
                 .addOptions(
                     {
@@ -46,19 +46,21 @@ module.exports = {
             new StringSelectMenuBuilder()
                 .setCustomId("select_wow")
                 .setPlaceholder("Nothing selected")
+                .setMinValues(2)
+                .setMaxValues(3)
                 .addOptions(
                     {
-                        label: "Select me",
+                        label: "Ice cream",
                         description: "This is a description",
                         value: "first_option",
                     },
                     {
-                        label: "You can select me too",
+                        label: "Bread",
                         description: "This is also a description",
                         value: "second_option",
                     },
                     {
-                        label: "I am also an option",
+                        label: "Cereal",
                         description: "This is a description as well",
                         value: "third_option",
                     }
@@ -76,9 +78,9 @@ module.exports = {
     },
     selectMenu: {
         // Custom Id of the select menu
-        select: {
+        select_id: {
+            // You shoudldn't be replying to menu changes but you should use update to change the message.
             async firstOption(interaction, client, db, replied) {
-                console.log("replied", replied);
                 if (replied) {
                     interaction.followUp("You selected the first option!");
                 } else {
@@ -86,9 +88,14 @@ module.exports = {
                     console.log("firstDone");
                 }
             },
-            async secondOption(interaction, client, db, replied) {
-                console.log("replied", replied);
-                //console.log(replied);
+            async second_option(interaction, client, db, replied) {
+                if (replied) {
+                    interaction.followUp("You selected the second option!");
+                } else {
+                    interaction.reply("You selected the second option!");
+                }
+            },
+            async thirdOption(interaction, client, db, replied) {
                 if (replied) {
                     interaction.followUp("You selected the second option!");
                 } else {
@@ -96,17 +103,23 @@ module.exports = {
                 }
             },
         },
-        selectWow: {
-            async firstOption(interaction) {
-                interaction.reply(
-                    "You selected the first option on second selection!"
-                );
-            },
-            async secondOption(interaction) {
-                interaction.reply(
-                    "You selected the second option on second selection!"
-                );
-            },
+        selectWow(interaction, client, db, values) {
+            const array = [];
+            values.forEach(element => {
+                if (element === "first_option") {
+                    array.push("Chocalate ice cream");
+                    array.push("Vanilla ice cream");
+                }
+                if (element === "second_option") {
+                    array.push("Chocalate bread");
+                    array.push("Vanilla bread");
+                }
+                if (element === "third_option") {
+                    array.push("Chocalate Cereal");
+                    array.push("Vanilla Cereal");
+                }
+            });
+            interaction.update(`Here are your options \n${array.join("\n")}`);
         },
     },
 };

@@ -1,6 +1,7 @@
 const {
     Events: { InteractionCreate },
 } = require("discord.js");
+const toCamelCase = require("../utils/toCamelCase");
 
 module.exports = {
     name: InteractionCreate,
@@ -50,11 +51,19 @@ module.exports = {
                 await command.execute(interaction, client, db);
             } catch (err) {
                 console.error(err);
-                interaction.reply({
-                    content:
-                        "There was an error trying to execute that command!",
-                    ephemeral: true,
-                });
+                if (interaction.replied) {
+                    interaction.followUp({
+                        content:
+                            "There was an error trying to execute that command!",
+                        ephemeral: true,
+                    });
+                } else {
+                    interaction.reply({
+                        content:
+                            "There was an error trying to execute that command!",
+                        ephemeral: true,
+                    });
+                }
             }
         } else if (interaction.isAutocomplete()) {
             const command = client.slashCommands.get(
@@ -70,34 +79,26 @@ module.exports = {
                 return;
             }
 
+            const focusedOption = interaction.options.getFocused(true);
+            const camelCaseName = toCamelCase(focusedOption.name);
+
+            let array;
+            // If camel case try camel case else try  with "_" in name
+            const autocompleteCommand = (command.autocomplete[camelCaseName] ||=
+                command.autocomplete[focusedOption.name]);
+            if (Array.isArray(autocompleteCommand)) {
+                array = autocompleteCommand;
+            } else {
+                array = await autocompleteCommand(interaction, client, db);
+            }
+
+            const filtered = array.filter(choice =>
+                choice
+                    .toLowerCase()
+                    .startsWith(focusedOption.value.toLowerCase())
+            );
+
             try {
-                const focusedOption = interaction.options.getFocused(true);
-                const camelCaseName = focusedOption.name
-                    .split("_")
-                    .map((word, index) =>
-                        index === 0
-                            ? word
-                            : word[0].toUpperCase() + word.slice(1)
-                    )
-                    .join("");
-
-                let array;
-                // If camel case try camel case else try  with "_" in name
-                const autocompleteCommand = (command.autocomplete[
-                    camelCaseName
-                ] ||= command.autocomplete[focusedOption.name]);
-                if (Array.isArray(autocompleteCommand)) {
-                    array = autocompleteCommand;
-                } else {
-                    array = await autocompleteCommand(interaction, client, db);
-                }
-
-                const filtered = array.filter(choice =>
-                    choice
-                        .toLowerCase()
-                        .startsWith(focusedOption.value.toLowerCase())
-                );
-
                 await interaction.respond(
                     filtered.map(choice => ({ name: choice, value: choice }))
                 );
@@ -118,12 +119,7 @@ module.exports = {
                 return;
             }
 
-            const camelCaseName = interaction.customId
-                .split("_")
-                .map((word, index) =>
-                    index === 0 ? word : word[0].toUpperCase() + word.slice(1)
-                )
-                .join("");
+            const camelCaseName = toCamelCase(interaction.customId);
 
             // If camel case try camel case else try  with "_" in name
             const buttonCommand = (command.button[camelCaseName] ||=
@@ -133,10 +129,17 @@ module.exports = {
                 await buttonCommand(interaction, client, db);
             } catch (err) {
                 console.error(err);
-                interaction.reply({
-                    content: "There was an error trying to run the button!",
-                    ephemeral: true,
-                });
+                if (interaction.replied) {
+                    interaction.followUp({
+                        content: "There was an error trying to run the button!",
+                        ephemeral: true,
+                    });
+                } else {
+                    interaction.reply({
+                        content: "There was an error trying to run the button!",
+                        ephemeral: true,
+                    });
+                }
             }
         } else if (interaction.isStringSelectMenu()) {
             const command = client.slashCommands.get(
@@ -152,60 +155,59 @@ module.exports = {
                 return;
             }
 
-            const camelCaseName = interaction.customId
-                .split("_")
-                .map((word, index) =>
-                    index === 0 ? word : word[0].toUpperCase() + word.slice(1)
-                )
-                .join("");
+            const camelCaseName = toCamelCase(interaction.customId);
             // If camel case try camel case else try  with "_" in name
             const selectMenuCommand = (command.selectMenu[camelCaseName] ||=
                 command.selectMenu[interaction.customId]);
 
             try {
-                for (const value of interaction.values) {
-                    const camelCaseNameValue = value
-                        .split("_")
-                        .map((word, index) =>
-                            index === 0
-                                ? word
-                                : word[0].toUpperCase() + word.slice(1)
-                        )
-                        .join("");
-                    // If camel case try camel case else try  with "_" in name
-                    const selectMenuValueCommand = (selectMenuCommand[
-                        camelCaseNameValue
-                    ] ||= command.button[value]);
-                    try {
-                        console.log("first");
-                        console.log(interaction.replied);
+                if (typeof selectMenuCommand === "function") {
+                    await selectMenuCommand(
+                        interaction,
+                        client,
+                        db,
+                        interaction.values
+                    );
+                } else {
+                    for (const value of interaction.values) {
+                        const camelCaseValue = value
+                            .split("_")
+                            .map((word, index) =>
+                                index === 0
+                                    ? word
+                                    : word[0].toUpperCase() + word.slice(1)
+                            )
+                            .join("");
+                        // If camel case try camel case else try  with "_" in name
+                        const selectMenuValueCommand = (selectMenuCommand[
+                            camelCaseValue
+                        ] ||= selectMenuCommand[value]);
                         await selectMenuValueCommand(
                             interaction,
                             client,
                             db,
                             interaction.replied
                         );
-                        console.log("second");
-                        console.log(interaction.replied);
-                    } catch (err) {
-                        console.error(err);
-                        interaction.reply({
-                            content:
-                                "There was an error trying to run the select menu!",
-                            ephemeral: true,
-                        });
                     }
                 }
             } catch (err) {
                 console.error(err);
-                interaction.reply({
-                    content:
-                        "There was an error trying to run the select menu!",
-                    ephemeral: true,
-                });
+                if (interaction.replied) {
+                    interaction.followUp({
+                        content:
+                            "There was an error trying to run the select menu!",
+                        ephemeral: true,
+                    });
+                } else {
+                    interaction.reply({
+                        content:
+                            "There was an error trying to run the select menu!",
+                        ephemeral: true,
+                    });
+                }
             }
         } else if (interaction.isModalSubmit()) {
-        } else if (interaction.isModalClose()) {
+        } else if (interaction.isMessageContextMenuCommand()) {
         }
     },
 };
