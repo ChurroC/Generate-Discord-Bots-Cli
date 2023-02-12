@@ -26,3 +26,5 @@ Maybe move name from query_version so you have to do this:
 query_versionAutoComplete to be able to use camelcase queryVersionAutoComplete
 
 Add a logger
+
+Maybe get model based of snowflake
