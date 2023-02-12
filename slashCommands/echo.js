@@ -32,15 +32,15 @@ module.exports = {
         try {
             if (channel) {
                 channel.send(input);
-                interaction.reply({
+                await interaction.reply({
                     content: `"${input}" has been echoed in <#${channel.id}>`,
                     ephemeral: true,
                 });
             } else {
-                interaction.reply({ content: input, ephemeral });
+                await interaction.reply({ content: input, ephemeral });
             }
         } catch (err) {
-            interaction.reply({
+            await interaction.reply({
                 content: "The bot could not send the message.",
                 ephemeral: true,
             });

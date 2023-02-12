@@ -1,6 +1,9 @@
 const toCamelCase = require("../../utils/toCamelCase.js");
 
-exports.modules = async function isButton(interaction, client, db) {
+module.exports = async function isModalSubmit(interaction, client, db) {
+    console.log(interaction);
+    console.log(interaction.customId);
+    console.log(interaction.message);
     const command = client.slashCommands.get(
         process.env.ENV !== "production"
             ? interaction.message.interaction.commandName.slice(0, -4)
@@ -9,30 +12,23 @@ exports.modules = async function isButton(interaction, client, db) {
 
     if (!command) {
         console.error(
-            `No button for ${interaction.message.interaction.commandName} was found.`
+            `No command matching ${interaction.commandName} was found.`
         );
         return;
     }
 
     try {
-        if (typeof command.button === "function") {
-            await command.button(interaction, client, db);
-        } else {
-            const buttonCommand =
-                command.button[toCamelCase(interaction.customId)] ||
-                command.button[interaction.customId];
-            await buttonCommand(interaction, client, db);
-        }
+        await command.modal(interaction, client, db);
     } catch (err) {
         console.error(err);
         if (interaction.replied) {
             await interaction.followUp({
-                content: "There was an error trying to run the button!",
+                content: "There was an error trying to execute that command!",
                 ephemeral: true,
             });
         } else {
             await interaction.reply({
-                content: "There was an error trying to run the button!",
+                content: "There was an error trying to execute that command!",
                 ephemeral: true,
             });
         }

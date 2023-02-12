@@ -7,11 +7,11 @@ const {
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName("Say Hi")
-        .setType(ApplicationCommandType.Message),
+        .setType(ApplicationCommandType.User),
     // Message ineraction or user interaction depending]
     async execute(interaction) {
         console.log(interaction.targetUser.username);
         console.log(interaction.options.getUser("target"));
-        interaction.reply(`Hi ${interaction.options.getUser("target")}`);
+        await interaction.reply(`Hi ${interaction.options.getUser("target")}`);
     },
 };

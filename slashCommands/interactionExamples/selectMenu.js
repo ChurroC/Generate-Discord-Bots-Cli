@@ -66,23 +66,27 @@ module.exports = {
                     }
                 )
         );
-        interaction.reply({
+        await interaction.reply({
             content: "Pong!",
             components: [row, row2, row3],
         });
     },
     button: {
         async hiButton(interaction) {
-            interaction.reply(`Hi ${interaction.user.username}!`);
+            await interaction.reply(`Hi ${interaction.user.username}!`);
         },
     },
     selectMenu: {
         // Custom Id of the select menu
-        select_id: {
+        selectId: {
             // You shoudldn't be replying to menu changes but you should use update to change the message.
+            // If you do need to use the replied variable you should use select_id() instead of select_id: {}
+            // Shoud be used mostly for updating
             async firstOption(interaction, client, db, replied) {
                 if (replied) {
-                    interaction.followUp("You selected the first option!");
+                    await interaction.followUp(
+                        "You selected the first option!"
+                    );
                 } else {
                     await interaction.reply("You selected the first option!");
                     console.log("firstDone");
@@ -90,20 +94,25 @@ module.exports = {
             },
             async second_option(interaction, client, db, replied) {
                 if (replied) {
-                    interaction.followUp("You selected the second option!");
+                    await interaction.followUp(
+                        "You selected the second option!"
+                    );
                 } else {
-                    interaction.reply("You selected the second option!");
+                    await interaction.reply("You selected the second option!");
                 }
             },
             async thirdOption(interaction, client, db, replied) {
                 if (replied) {
-                    interaction.followUp("You selected the second option!");
+                    await interaction.followUp(
+                        "You selected the second option!"
+                    );
                 } else {
-                    interaction.reply("You selected the second option!");
+                    await interaction.reply("You selected the second option!");
                 }
             },
         },
-        selectWow(interaction, client, db, values) {
+        // If you have one option only sleectable for each menu use a function or when each options add together liek below to form an array of options.
+        async selectWow(interaction, client, db, values) {
             const array = [];
             values.forEach(element => {
                 if (element === "first_option") {
@@ -119,7 +128,9 @@ module.exports = {
                     array.push("Vanilla Cereal");
                 }
             });
-            interaction.update(`Here are your options \n${array.join("\n")}`);
+            await interaction.update(
+                `Here are your options \n${array.join("\n")}`
+            );
         },
     },
 };

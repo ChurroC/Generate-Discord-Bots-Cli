@@ -1,7 +1,11 @@
 const {
     Events: { InteractionCreate },
 } = require("discord.js");
-const toCamelCase = require("../utils/toCamelCase");
+const isChatInputCommand = require("./interactions/isChatInputCommand");
+const isAutocomplete = require("./interactions/isAutocomplete");
+const isButton = require("./interactions/isButton");
+const isSelectMenu = require("./interactions/isSelectMenu");
+const isModalSubmit = require("./interactions/isModalSubmit");
 
 module.exports = {
     name: InteractionCreate,
@@ -32,181 +36,16 @@ module.exports = {
                 },
             });
         }
-
         if (interaction.isChatInputCommand()) {
-            const command = client.slashCommands.get(
-                process.env.ENV !== "production"
-                    ? interaction.commandName.slice(0, -4)
-                    : interaction.commandName
-            );
-
-            if (!command) {
-                console.error(
-                    `No command matching ${interaction.commandName} was found.`
-                );
-                return;
-            }
-
-            try {
-                await command.execute(interaction, client, db);
-            } catch (err) {
-                console.error(err);
-                if (interaction.replied) {
-                    interaction.followUp({
-                        content:
-                            "There was an error trying to execute that command!",
-                        ephemeral: true,
-                    });
-                } else {
-                    interaction.reply({
-                        content:
-                            "There was an error trying to execute that command!",
-                        ephemeral: true,
-                    });
-                }
-            }
+            await isChatInputCommand(interaction, client, db);
         } else if (interaction.isAutocomplete()) {
-            const command = client.slashCommands.get(
-                process.env.ENV !== "production"
-                    ? interaction.commandName.slice(0, -4)
-                    : interaction.commandName
-            );
-
-            if (!command) {
-                console.error(
-                    `No command matching ${interaction.commandName} was found.`
-                );
-                return;
-            }
-
-            const focusedOption = interaction.options.getFocused(true);
-            const camelCaseName = toCamelCase(focusedOption.name);
-
-            let array;
-            // If camel case try camel case else try  with "_" in name
-            const autocompleteCommand = (command.autocomplete[camelCaseName] ||=
-                command.autocomplete[focusedOption.name]);
-            if (Array.isArray(autocompleteCommand)) {
-                array = autocompleteCommand;
-            } else {
-                array = await autocompleteCommand(interaction, client, db);
-            }
-
-            const filtered = array.filter(choice =>
-                choice
-                    .toLowerCase()
-                    .startsWith(focusedOption.value.toLowerCase())
-            );
-
-            try {
-                await interaction.respond(
-                    filtered.map(choice => ({ name: choice, value: choice }))
-                );
-            } catch (err) {
-                console.error(err);
-            }
+            await isAutocomplete(interaction, client, db);
         } else if (interaction.isButton()) {
-            const command = client.slashCommands.get(
-                process.env.ENV !== "production"
-                    ? interaction.message.interaction.commandName.slice(0, -4)
-                    : interaction.message.interaction.commandName
-            );
-
-            if (!command) {
-                console.error(
-                    `No button for ${interaction.message.interaction.commandName} was found.`
-                );
-                return;
-            }
-
-            const camelCaseName = toCamelCase(interaction.customId);
-
-            // If camel case try camel case else try  with "_" in name
-            const buttonCommand = (command.button[camelCaseName] ||=
-                command.button[interaction.customId]);
-
-            try {
-                await buttonCommand(interaction, client, db);
-            } catch (err) {
-                console.error(err);
-                if (interaction.replied) {
-                    interaction.followUp({
-                        content: "There was an error trying to run the button!",
-                        ephemeral: true,
-                    });
-                } else {
-                    interaction.reply({
-                        content: "There was an error trying to run the button!",
-                        ephemeral: true,
-                    });
-                }
-            }
+            await isButton(interaction, client, db);
         } else if (interaction.isStringSelectMenu()) {
-            const command = client.slashCommands.get(
-                process.env.ENV !== "production"
-                    ? interaction.message.interaction.commandName.slice(0, -4)
-                    : interaction.message.interaction.commandName
-            );
-
-            if (!command) {
-                console.error(
-                    `No button for ${interaction.message.interaction.commandName} was found.`
-                );
-                return;
-            }
-
-            const camelCaseName = toCamelCase(interaction.customId);
-            // If camel case try camel case else try  with "_" in name
-            const selectMenuCommand = (command.selectMenu[camelCaseName] ||=
-                command.selectMenu[interaction.customId]);
-
-            try {
-                if (typeof selectMenuCommand === "function") {
-                    await selectMenuCommand(
-                        interaction,
-                        client,
-                        db,
-                        interaction.values
-                    );
-                } else {
-                    for (const value of interaction.values) {
-                        const camelCaseValue = value
-                            .split("_")
-                            .map((word, index) =>
-                                index === 0
-                                    ? word
-                                    : word[0].toUpperCase() + word.slice(1)
-                            )
-                            .join("");
-                        // If camel case try camel case else try  with "_" in name
-                        const selectMenuValueCommand = (selectMenuCommand[
-                            camelCaseValue
-                        ] ||= selectMenuCommand[value]);
-                        await selectMenuValueCommand(
-                            interaction,
-                            client,
-                            db,
-                            interaction.replied
-                        );
-                    }
-                }
-            } catch (err) {
-                console.error(err);
-                if (interaction.replied) {
-                    interaction.followUp({
-                        content:
-                            "There was an error trying to run the select menu!",
-                        ephemeral: true,
-                    });
-                } else {
-                    interaction.reply({
-                        content:
-                            "There was an error trying to run the select menu!",
-                        ephemeral: true,
-                    });
-                }
-            }
+            await isSelectMenu(interaction, client, db);
         } else if (interaction.isModalSubmit()) {
+            await isModalSubmit(interaction, client, db);
         } else if (interaction.isMessageContextMenuCommand()) {
         }
     },

@@ -40,7 +40,7 @@ module.exports = {
         async hiButton(interaction) {
             interaction.reply(`Hi ${interaction.user.username}!`);
         },
-        async destruction_button(interaction) {
+        async destructionButton(interaction) {
             interaction.update({ components: [] });
         },
     },
