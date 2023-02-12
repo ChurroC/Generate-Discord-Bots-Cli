@@ -27,4 +27,7 @@ query_versionAutoComplete to be able to use camelcase queryVersionAutoComplete
 
 Add a logger
 
+Create a image until that takes in an image and turns it into a link. Then
+cachss it for the future.
+
 Maybe get model based of snowflake
