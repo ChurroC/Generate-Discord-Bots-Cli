@@ -1,36 +1,31 @@
 const toCamelCase = require("../../utils/toCamelCase.js");
 
 module.exports = async function isModalSubmit(interaction, client, db) {
-    console.log(interaction);
-    console.log(interaction.customId);
-    console.log(interaction.message);
+    const [modelName, name] = interaction.customId.split(",");
     const command = client.slashCommands.get(
-        process.env.ENV !== "production"
-            ? interaction.message.interaction.commandName.slice(0, -4)
-            : interaction.message.interaction.commandName
+        process.env.ENV !== "production" ? name.slice(0, -4) : name
     );
 
     if (!command) {
-        console.error(
-            `No command matching ${interaction.commandName} was found.`
-        );
+        console.error(`No command matching ${name} was found.`);
         return;
     }
 
     try {
-        await command.modal(interaction, client, db);
+        if (typeof command.modal === "function") {
+            await command.modal(interaction, client, db);
+        } else {
+            // Set button command to command.button[toCamelCase(interaction.customId, seperator)] || command.button[interaction.customId];
+            // Do this only if your button id is name1_name2 and you want your function named name1_name2() and name1Name2()
+            // Also set your seperator to whatever seperates each name1 and names2 in this example it would be "_"
+            const modalCommand = command.modal[toCamelCase(modelName)];
+            await modalCommand(interaction, client, db);
+        }
     } catch (err) {
         console.error(err);
-        if (interaction.replied) {
-            await interaction.followUp({
-                content: "There was an error trying to execute that command!",
-                ephemeral: true,
-            });
-        } else {
-            await interaction.reply({
-                content: "There was an error trying to execute that command!",
-                ephemeral: true,
-            });
-        }
+        interactionError(
+            interaction,
+            "There was an error trying to execute that modal!"
+        );
     }
 };

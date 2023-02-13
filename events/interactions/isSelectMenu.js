@@ -16,11 +16,19 @@ exports.module = async function isSelectMenu(interaction, client, db) {
 
     try {
         if (typeof command.selectMenu === "function") {
-            await command.selectMenu(interaction, client, db);
+            await command.selectMenu(
+                interaction,
+                client,
+                db,
+                interaction.customId
+            );
         } else {
+            // Set select menu command to command.selectMenu[toCamelCase(interaction.customId, seperator)] || command.button[interaction.customId];
+            // Do this only if your button id is name1_name2 and you want your function named name1_name2() and name1Name2()
+            // Also set your seperator to whatever seperates each name1 and names2 in this example it would be "_"
+            // Also do this for selectMenuValueCommand inside else statement
             const selectMenuCommand =
-                command.selectMenu[toCamelCase(interaction.customId)] ||
-                command.selectMenu[interaction.customId];
+                command.selectMenu[toCamelCase(interaction.customId)];
             // This is if they have an object with the select menu name as the key and they can add the customId handler for each one or they have it so only one menu can be selected at a time
             if (typeof selectMenuCommand === "function") {
                 await selectMenuCommand(
@@ -32,8 +40,7 @@ exports.module = async function isSelectMenu(interaction, client, db) {
             } else {
                 for (const value of interaction.values) {
                     const selectMenuValueCommand =
-                        selectMenuCommand[toCamelCase(value)] ||
-                        selectMenuCommand[value];
+                        selectMenuCommand[toCamelCase(value)];
                     await selectMenuValueCommand(
                         interaction,
                         client,
@@ -45,16 +52,9 @@ exports.module = async function isSelectMenu(interaction, client, db) {
         }
     } catch (err) {
         console.error(err);
-        if (interaction.replied) {
-            await interaction.followUp({
-                content: "There was an error trying to run the select menu!",
-                ephemeral: true,
-            });
-        } else {
-            await interaction.reply({
-                content: "There was an error trying to run the select menu!",
-                ephemeral: true,
-            });
-        }
+        interactionError(
+            interaction,
+            "There was an error trying to run the select menu!"
+        );
     }
 };

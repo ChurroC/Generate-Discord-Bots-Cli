@@ -9,7 +9,8 @@ module.exports = {
                 .setName("prefix")
                 .setDescription("The new prefix for the guild.")
                 .setRequired(true)
-        ),
+        )
+        .setDMPermission(false),
     async execute(interaction, client, db) {
         const newPrefix = interaction.options.getString("prefix");
 

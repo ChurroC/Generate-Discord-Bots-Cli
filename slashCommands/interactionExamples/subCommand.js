@@ -19,9 +19,13 @@ module.exports = {
                 )
         )
         .addSubcommand(subcommand =>
-            subcommand.setName("server").setDescription("Info about the server")
+            subcommand
+                .setName("server_id")
+                .setDescription("Info about the server")
         ),
+    // If you want to change default behavior of button works you can just do async execute(interaction, client, db)
     execute: {
+        // The function names are based of the subcommand names
         async user(interaction) {
             const user = interaction.options.getUser("target");
             if (user) {
@@ -34,7 +38,8 @@ module.exports = {
                 );
             }
         },
-        async server(interaction) {
+        // Use server_id or serverId
+        async serverId(interaction) {
             await interaction.reply(
                 `Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
             );

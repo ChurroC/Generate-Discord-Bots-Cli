@@ -15,27 +15,34 @@ module.exports = async function isAutocomplete(interaction, client, db) {
     }
 
     const focusedOption = interaction.options.getFocused(true);
-    const camelCaseName = toCamelCase(focusedOption.name);
-
-    let array;
-    // If camel case try camel case else try  with "_" in name
-    const autocompleteCommand =
-        command.autocomplete[camelCaseName] ||
-        command.autocomplete[focusedOption.name];
 
     try {
-        if (typeof autocompleteCommand === "function") {
-            array = await autocompleteCommand(interaction, client, db);
+        if (typeof command.autocomplete === "function") {
+            await command.autocomplete(interaction, client, db, focusedOption);
         } else {
-            array = autocompleteCommand;
-        }
+            // Set autocomplete command to command.autocomplete[toCamelCase(interaction.customId, seperator)] || command.button[interaction.customId];
+            // Do this only if your button id is name1,name2 and you want your function named name1,name2() and name1Name2()
+            // Currently speerator is on "_" for the example above it would be ","
+            const autocompleteCommand =
+                command.autocomplete[toCamelCase(focusedOption.name, "_")] ||
+                command.autocomplete[focusedOption.name];
 
-        const filtered = array.filter(choice =>
-            choice.toLowerCase().startsWith(focusedOption.value.toLowerCase())
-        );
-        await interaction.respond(
-            filtered.map(choice => ({ name: choice, value: choice }))
-        );
+            let choices;
+            if (typeof autocompleteCommand === "function") {
+                choices = await autocompleteCommand(interaction, client, db);
+            } else {
+                choices = autocompleteCommand;
+            }
+
+            const filtered = choices.filter(choice =>
+                choice
+                    .toLowerCase()
+                    .startsWith(focusedOption.value.toLowerCase())
+            );
+            await interaction.respond(
+                filtered.map(choice => ({ name: choice, value: choice }))
+            );
+        }
     } catch (err) {
         // Can't really send them an error message here becuase every letter they type they would recieve one and woudln't really affect the experience
         console.error(err);

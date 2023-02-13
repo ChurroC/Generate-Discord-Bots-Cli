@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 const { REST, Routes } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
@@ -36,6 +35,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 // and deploy your commands!
 (async () => {
     try {
+        console.log("Started refreshing application (/) commands.");
         if (process.env.ENV === "production") {
             // Deploy global commands
             await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {

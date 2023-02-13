@@ -1,11 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-// This is a command that has autocomplete options
-// You can either have an array of strings that will be used for autocomplete options
-// Or you can have a function that will be used to generate autocomplete options
-// The array or the function must be names the name of the option with camle case and no "_" and appended with "Autocomplete"
-// Use can only use _ in the option name if you want to use camel case in the function name
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("guide")
@@ -22,8 +16,14 @@ module.exports = {
                 .setDescription("Phrase to search for")
                 .setAutocomplete(true)
         ),
-    async execute() {},
+    async execute(interaction) {
+        interaction.reply("Autocomplete done!");
+    },
+    // If you want to change default behavior of autocomplete you can just do autocomplete(interaction, client, db, { value, name }) value and name are from focusedOption
+    // If you have the id as name1_name2 you can either do name1_name2 or name1Name2 which is preferred
     autocomplete: {
+        // Name must be the same as the option name
+        // You can just use an array of strings for the autocomplete options
         query: [
             "Popular Topics: Threads",
             "Sharding: Getting started",
@@ -31,7 +31,8 @@ module.exports = {
             "Interactions: Replying to slash commands",
             "Popular Topics: Embed preview",
         ],
-        // Also version_for_query works
+        // You can use a function to generate the autocomplete options
+        // You can use version_for_query as but it's prefered to use camelCase
         async versionForQuery(interaction, client, db) {
             const query = interaction.options.getString("query");
             const versions = ["v9", "v11", "v12", "v13", "v14"];

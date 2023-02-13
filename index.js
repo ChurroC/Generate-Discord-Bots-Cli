@@ -2,6 +2,7 @@ const path = require("path");
 const { PrismaClient } = require("@prisma/client");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
+require("./utils/modelSetCustomIdOverride")();
 
 // Client
 // This is the client that will be used to interact with the Discord API.

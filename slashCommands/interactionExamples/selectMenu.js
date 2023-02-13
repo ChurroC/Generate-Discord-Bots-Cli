@@ -8,13 +8,16 @@ const {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("selectmenu")
+        .setName("select_menu")
         .setDescription("Replies with Pong!")
         .setDMPermission(true),
     async execute(interaction) {
+        // By setting min and max values you can allow them to choose multiple options
+        // Each menu is 1 whole row
+        // Since you can have 5 rows you can have at max 5 menus
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId("select_id")
+                .setCustomId("select id")
                 .setPlaceholder("Nothing selected")
                 .setMinValues(1)
                 .setMaxValues(3)
@@ -22,29 +25,29 @@ module.exports = {
                     {
                         label: "Select me",
                         description: "This is a description",
-                        value: "first_option",
+                        value: "first",
                     },
                     {
                         label: "You can select me too",
                         description: "This is also a description",
-                        value: "second_option",
+                        value: "second option",
                     },
                     {
                         label: "I am also an option",
                         description: "This is a description as well",
-                        value: "third_option",
+                        value: "third option",
                     }
                 )
         );
         const row2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId("hi_button")
+                .setCustomId("hi button")
                 .setLabel("I say hi!")
                 .setStyle(Secondary)
         );
         const row3 = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId("select_wow")
+                .setCustomId("select wow")
                 .setPlaceholder("Nothing selected")
                 .setMinValues(2)
                 .setMaxValues(3)
@@ -52,17 +55,17 @@ module.exports = {
                     {
                         label: "Ice cream",
                         description: "This is a description",
-                        value: "first_option",
+                        value: "first option",
                     },
                     {
                         label: "Bread",
                         description: "This is also a description",
-                        value: "second_option",
+                        value: "second option",
                     },
                     {
                         label: "Cereal",
                         description: "This is a description as well",
-                        value: "third_option",
+                        value: "third option",
                     }
                 )
         );
@@ -76,12 +79,14 @@ module.exports = {
             await interaction.reply(`Hi ${interaction.user.username}!`);
         },
     },
+    // If you want to change default behavior of select menu works you can just do selectMenu(interaction, client, db, customId)
     selectMenu: {
         // Custom Id of the select menu
+        // If you want to change the default behavior of the select menu you can just do idOfMenu(interaction, client, db, values) remeber values is an array
         selectId: {
-            // You shoudldn't be replying to menu changes but you should use update to change the message.
-            // If you do need to use the replied variable you should use select_id() instead of select_id: {}
-            // Shoud be used mostly for updating
+            // When you use the the select menu you shouldn't be replying and instead updating the message
+            // If you do need to use the reply you should use replied param to check if it has already been replied to in which case you followUp
+            // You could also change the selectId into a function like below
             async firstOption(interaction, client, db, replied) {
                 if (replied) {
                     await interaction.followUp(
@@ -92,7 +97,7 @@ module.exports = {
                     console.log("firstDone");
                 }
             },
-            async second_option(interaction, client, db, replied) {
+            async secondOption(interaction, client, db, replied) {
                 if (replied) {
                     await interaction.followUp(
                         "You selected the second option!"
@@ -111,19 +116,19 @@ module.exports = {
                 }
             },
         },
-        // If you have one option only sleectable for each menu use a function or when each options add together liek below to form an array of options.
+        // If you have one option only selection for each menu use a function or when each options works together like below to form an array of options
         async selectWow(interaction, client, db, values) {
             const array = [];
             values.forEach(element => {
-                if (element === "first_option") {
+                if (element === "first option") {
                     array.push("Chocalate ice cream");
                     array.push("Vanilla ice cream");
                 }
-                if (element === "second_option") {
+                if (element === "second option") {
                     array.push("Chocalate bread");
                     array.push("Vanilla bread");
                 }
-                if (element === "third_option") {
+                if (element === "third option") {
                     array.push("Chocalate Cereal");
                     array.push("Vanilla Cereal");
                 }

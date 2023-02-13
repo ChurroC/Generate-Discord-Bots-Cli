@@ -8,8 +8,7 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("button")
-        .setDescription("Creates a button!")
-        .setDMPermission(true),
+        .setDescription("Creates a button!"),
     async execute(interaction) {
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
@@ -17,31 +16,34 @@ module.exports = {
                 .setLabel("I am a button!")
                 .setStyle(Primary),
             new ButtonBuilder()
-                .setCustomId("hi_button")
+                .setCustomId("Hi Button")
                 .setLabel("I say hi!")
                 .setStyle(Secondary)
         );
         const row2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId("destruction_button")
+                .setCustomId("destruction button")
                 .setLabel("Destroy all buttons!")
                 .setStyle(Danger)
         );
-        interaction.reply({
+        await interaction.reply({
             content: "Pong!",
             components: [row, row2],
         });
     },
+    // If you want to change default behavior of button works you can just do button(interaction, client, db, customId)
+    // If you have the id as name1 name2 you can either do name1 name2 or name1Name2 which is preferred
     button: {
+        // Name must be the same as the customId
         async primary(interaction) {
-            interaction.reply("Button clicked!");
+            await interaction.reply("Button clicked!");
         },
-        // Also hi_button works
+        // You must turn the customId into camelCase
         async hiButton(interaction) {
-            interaction.reply(`Hi ${interaction.user.username}!`);
+            await interaction.reply(`Hi ${interaction.user.username}!`);
         },
         async destructionButton(interaction) {
-            interaction.update({ components: [] });
+            await interaction.update({ components: [] });
         },
     },
 };

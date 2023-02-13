@@ -30,4 +30,8 @@ Add a logger
 Create a image until that takes in an image and turns it into a link. Then
 cachss it for the future.
 
-Maybe get model based of snowflake
+Maybe get model based of snowflake Spent like 3 hours doing stuff to mdify
+classes and when I finally finsihe it I realized it's to wierd to import
+something from a file and not discord and add interaciotn as param so yeah just
+force them to use interaction.commandName as customID or until I get a better
+idea
