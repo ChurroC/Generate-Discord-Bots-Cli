@@ -87,7 +87,7 @@ module.exports = {
             // When you use the the select menu you shouldn't be replying and instead updating the message
             // If you do need to use the reply you should use replied param to check if it has already been replied to in which case you followUp
             // You could also change the selectId into a function like below
-            async firstOption(interaction, client, db, replied) {
+            async first(interaction, client, db, replied) {
                 if (replied) {
                     await interaction.followUp(
                         "You selected the first option!"

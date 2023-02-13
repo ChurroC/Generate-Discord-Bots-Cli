@@ -53,7 +53,7 @@ module.exports = {
         async hiButton(interaction) {
             await interaction.reply(`Hi ${interaction.user.username}!`);
         },
-        async destruction_button(interaction) {
+        async destructionButton(interaction) {
             await interaction.update({ components: [] });
         },
     },

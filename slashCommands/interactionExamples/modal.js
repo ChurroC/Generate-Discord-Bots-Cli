@@ -62,8 +62,6 @@ module.exports = {
             );
 
             // Send a message to the user with the values they entered
-            console.log("interaction");
-            console.log("i");
             interaction.reply({
                 content: `Your favorite color is ${favoriteColor} and your favorite hobbies are ${hobbies}`,
                 components: [row],
@@ -84,7 +82,6 @@ module.exports = {
                     .setStyle(Short)
             );
 
-            console.log("test");
             const hobbiesInput = new ActionRowBuilder().addComponents(
                 new TextInputBuilder()
                     .setCustomId("hobbiesInput")

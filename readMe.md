@@ -35,3 +35,6 @@ classes and when I finally finsihe it I realized it's to wierd to import
 something from a file and not discord and add interaciotn as param so yeah just
 force them to use interaction.commandName as customID or until I get a better
 idea
+
+Throw error in try catch if the varibale to function or not in interacito
+nhandler. This is so code works still.

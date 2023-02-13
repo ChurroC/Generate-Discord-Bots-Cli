@@ -1,6 +1,6 @@
 const toCamelCase = require("../../utils/toCamelCase.js");
 
-exports.module = async function isSelectMenu(interaction, client, db) {
+module.exports = async function isSelectMenu(interaction, client, db) {
     const command = client.slashCommands.get(
         process.env.ENV !== "production"
             ? interaction.message.interaction.commandName.slice(0, -4)
@@ -41,6 +41,7 @@ exports.module = async function isSelectMenu(interaction, client, db) {
                 for (const value of interaction.values) {
                     const selectMenuValueCommand =
                         selectMenuCommand[toCamelCase(value)];
+                    console.log(value);
                     await selectMenuValueCommand(
                         interaction,
                         client,
