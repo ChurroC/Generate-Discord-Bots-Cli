@@ -4,7 +4,6 @@ const {
     ButtonBuilder,
     ButtonStyle: { Primary, Secondary, Danger },
 } = require("discord.js");
-const { execute } = require("./context");
 
 module.exports = {
     data: new SlashCommandBuilder()

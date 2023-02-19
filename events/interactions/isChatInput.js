@@ -1,4 +1,5 @@
 const toCamelCase = require("../../utils/toCamelCase.js");
+const interactionError = require("../../utils/interactionError.js");
 
 module.exports = async function isChatInputCommand(interaction, client, db) {
     const command = client.slashCommands.get(

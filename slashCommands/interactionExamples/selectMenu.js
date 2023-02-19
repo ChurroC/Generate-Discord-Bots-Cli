@@ -106,7 +106,7 @@ module.exports = {
                     await interaction.reply("You selected the second option!");
                 }
             },
-            async thirdOption(interaction, client, db, replied) {
+            async thirdOptsion(interaction, client, db, replied) {
                 if (replied) {
                     await interaction.followUp(
                         "You selected the second option!"

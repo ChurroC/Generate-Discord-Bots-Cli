@@ -1,11 +1,12 @@
 const {
     Events: { InteractionCreate },
 } = require("discord.js");
-const isChatInputCommand = require("./interactions/isChatInputCommand");
+const isChatInput = require("./interactions/isChatInput");
 const isAutocomplete = require("./interactions/isAutocomplete");
 const isButton = require("./interactions/isButton");
 const isSelectMenu = require("./interactions/isSelectMenu");
 const isModalSubmit = require("./interactions/isModalSubmit");
+const isContext = require("./interactions/isContext");
 
 module.exports = {
     name: InteractionCreate,
@@ -37,7 +38,7 @@ module.exports = {
             });
         }
         if (interaction.isChatInputCommand()) {
-            await isChatInputCommand(interaction, client, db);
+            await isChatInput(interaction, client, db);
         } else if (interaction.isAutocomplete()) {
             await isAutocomplete(interaction, client, db);
         } else if (interaction.isButton()) {
@@ -46,7 +47,8 @@ module.exports = {
             await isSelectMenu(interaction, client, db);
         } else if (interaction.isModalSubmit()) {
             await isModalSubmit(interaction, client, db);
-        } else if (interaction.isMessageContextMenuCommand()) {
+        } else if (interaction.isContextMenuCommand()) {
+            await isContext(interaction, client, db);
         }
     },
 };

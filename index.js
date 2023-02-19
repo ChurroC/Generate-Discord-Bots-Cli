@@ -3,7 +3,8 @@ const { PrismaClient } = require("@prisma/client");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
 require("./utils/modelSetCustomIdOverride")();
-
+require("./utils/logErrors")();
+console.error("Jjmko");
 // Client
 // This is the client that will be used to interact with the Discord API.
 // Intents is used to make sure the client can recieve different types of data form Discord API.
@@ -16,7 +17,7 @@ const client = new Client({
 });
 
 // Database
-// Use client.database."model name" to access the database.
+// Use client.db."model name" to access the database.
 // For example you could make a schema for bot information and name it botInfo and use client.database.botInfo to access it.
 client.db = new PrismaClient();
 
