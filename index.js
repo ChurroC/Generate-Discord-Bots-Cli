@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
 require("./utils/modelSetCustomIdOverride")();
 require("./utils/logErrors")();
-console.error("Jjmko");
+
 // Client
 // This is the client that will be used to interact with the Discord API.
 // Intents is used to make sure the client can recieve different types of data form Discord API.
