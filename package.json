@@ -1,0 +1,31 @@
+{
+    "name": "@churroc/create-discord-bot",
+    "version": "1.0.0",
+    "description": "A CLI to bootstrap new discord bots",
+    "main": "cli.js",
+    "bin": {
+        "@your_npm_username/create-project": "bin/create-discord-bot",
+        "create-project": "bin/create-discord-bot"
+    },
+    "scripts": {
+        "start": "node cli.js",
+        "startDev": "nodemon cli.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ChurroC/Discord-Bot-Template.git"
+    },
+    "keywords": [
+        "cli",
+        "create-project"
+    ],
+    "author": "ChurroC",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ChurroC/Discord-Bot-Template/issues"
+    },
+    "homepage": "https://github.com/ChurroC/Discord-Bot-Template#readme",
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    }
+}
