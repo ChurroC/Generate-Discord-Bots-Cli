@@ -24,8 +24,9 @@ module.exports = async function isAutocomplete(interaction, client, db) {
             // Do this only if your button id is name1,name2 and you want your function named name1,name2() and name1Name2()
             // Currently speerator is on "_" for the example above it would be ","
             const autocompleteCommand =
-                command.autocomplete[toCamelCase(focusedOption.name, "_")] ||
-                command.autocomplete[focusedOption.name];
+                command.autocomplete[
+                    toCamelCase(focusedOption.name, "_", "-")
+                ] || command.autocomplete[focusedOption.name];
 
             let choices;
             if (typeof autocompleteCommand === "function") {

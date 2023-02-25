@@ -9,6 +9,7 @@ module.exports = {
                 .setName("prefix")
                 .setDescription("The new prefix for the guild.")
                 .setRequired(true)
+                .setMaxLength(4)
         )
         .setDMPermission(false),
     async execute(interaction, client, db) {

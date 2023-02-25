@@ -24,7 +24,7 @@ module.exports = async function isChatInputCommand(interaction, client, db) {
             // Currently speerator is on "_" for the example above it would be ","
             const chatCommand =
                 command.execute[
-                    toCamelCase(interaction.options.getSubcommand(), "_")
+                    toCamelCase(interaction.options.getSubcommand(), "_", "-")
                 ] || command.execute[interaction.commandName];
             await chatCommand(interaction, client, db);
         }

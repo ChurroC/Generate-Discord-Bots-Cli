@@ -12,7 +12,7 @@ module.exports = {
         )
         .addStringOption(option =>
             option
-                .setName("version_for_query")
+                .setName("version-for-query")
                 .setDescription("Phrase to search for")
                 .setAutocomplete(true)
         ),

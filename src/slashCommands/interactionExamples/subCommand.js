@@ -1,9 +1,4 @@
-const {
-    SlashCommandBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle: { Primary, Secondary, Danger },
-} = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -42,18 +37,6 @@ module.exports = {
             await interaction.reply(
                 `Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
             );
-        },
-    },
-    button: {
-        async primary(interaction) {
-            await interaction.reply("Button clicked!");
-        },
-        // Also hi_button works
-        async hiButton(interaction) {
-            await interaction.reply(`Hi ${interaction.user.username}!`);
-        },
-        async destructionButton(interaction) {
-            await interaction.update({ components: [] });
         },
     },
 };

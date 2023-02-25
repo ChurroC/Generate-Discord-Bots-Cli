@@ -18,3 +18,7 @@ force them to use interaction.commandName as customID or until I get a better
 idea
 
 Still need to add voice
+
+Add subcommand group support in subcomand.js
+
+Also make music a subcommand automatically.

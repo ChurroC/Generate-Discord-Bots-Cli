@@ -1,7 +1,7 @@
-const path = require("path");
 const { PrismaClient } = require("@prisma/client");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
+const path = require("path");
 require("./utils/modelSetCustomIdOverride")();
 require("./utils/logErrors")();
 
@@ -13,6 +13,7 @@ const client = new Client({
         GatewayIntentBits.Guilds, //adds server functionality
         GatewayIntentBits.GuildMessages, //gets messages from our bot.
         GatewayIntentBits.MessageContent, //gets messages from our bot.
+        GatewayIntentBits.GuildVoiceStates, //gets voice states from our bot.
     ],
 });
 
