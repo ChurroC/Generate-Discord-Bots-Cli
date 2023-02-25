@@ -1,7 +1,7 @@
-module.exports = function toCamelCase(word, ...separators) {
-    (separators.length !== 0 ? separators : [" "]).forEach(separator => {
+function toCamelCase(word, ...separator) {
+    (separator.length !== 0 ? separator : [" "]).forEach(element => {
         word = word
-            .split(separator)
+            .split(element)
             .map((word, index) => {
                 return index === 0
                     ? word[0].toLowerCase() + word.slice(1)
@@ -10,4 +10,7 @@ module.exports = function toCamelCase(word, ...separators) {
             .join("");
     });
     return word;
-};
+}
+
+const cool = "hello_world-ddd";
+console.log(toCamelCase(cool));
