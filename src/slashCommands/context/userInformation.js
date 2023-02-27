@@ -1,6 +1,6 @@
 const {
     ContextMenuCommandBuilder,
-    ApplicationCommandType: { User, Message },
+    ApplicationCommandType: { User },
 } = require("discord.js");
 
 module.exports = {

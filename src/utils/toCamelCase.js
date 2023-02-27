@@ -1,4 +1,4 @@
-module.exports = function toCamelCase(word, ...separators) {
+module.exports = (word, ...separators) => {
     (separators.length !== 0 ? separators : [" "]).forEach(separator => {
         word = word
             .split(separator)

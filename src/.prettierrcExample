@@ -14,12 +14,6 @@
             "options": {
                 "tabWidth": 2
             }
-        },
-        {
-            "files": "events/ready.js",
-            "options": {
-                "printWidth": 200
-            }
         }
     ]
 }

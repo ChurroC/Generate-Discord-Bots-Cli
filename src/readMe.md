@@ -22,3 +22,12 @@ Still need to add voice
 Add subcommand group support in subcomand.js
 
 Also make music a subcommand automatically.
+
+Maybe have an object for all the function params so I cold do this
+async execute({ interaction, user })
+instead of 
+async execute(interaction, client, db, user)
+
+subcommandGroup needed
+if bot couldnt join vc reply with error
+maybe fix deepreaddir

@@ -19,13 +19,14 @@ module.exports = {
                     );
                 },
                 max: 1,
-                time: 10000,
+                time: 30000,
                 errors: ["time"],
             });
-            await interaction.followUp(
-                `${collected.first().author} got the correct answer!`
-            );
+            await collected
+                .first()
+                .reply(`${collected.first().author} got the correct answer!`);
         } catch (e) {
+            console.error(e);
             await interaction.followUp(
                 "Looks like nobody got the answer in time."
             );

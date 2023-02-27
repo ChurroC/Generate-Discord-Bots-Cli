@@ -1,6 +1,6 @@
 const { ModalBuilder } = require("discord.js");
 
-module.exports = function modelSetCustomIdOverride() {
+module.exports = () => {
     ModalBuilder.prototype.setCustomId = function (customId, interaction) {
         if (interaction) {
             this.data.custom_id = `${customId},${

@@ -1,8 +1,8 @@
-module.exports = async function interactionError(
+module.exports = async (
     interaction,
     reply = "There was an error trying to run the command!",
     replyFollowUp = "An error may have occured with the bot!"
-) {
+) => {
     if (!interaction.replied) {
         await interaction.reply({
             content: reply,

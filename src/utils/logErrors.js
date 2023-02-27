@@ -1,13 +1,17 @@
 const fs = require("fs").promises;
 
-module.exports = async function LogError() {
+module.exports = () => {
     const oldConsoleError = console.error;
     console.error = (...logs) => {
         oldConsoleError(...logs);
-        fs.writeFile(
-            "./error.log",
-            `${new Date().toLocaleString()}: ${logs.join(" ")}\n`,
-            { flag: "a+" }
-        );
+        logs.forEach(log => {
+            fs.writeFile(
+                "./error.log",
+                `${new Date().toLocaleString()}: ${
+                    log instanceof Error ? log.stack : log
+                }\n`,
+                { flag: "a+" }
+            );
+        });
     };
 };

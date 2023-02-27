@@ -1,7 +1,7 @@
 const {
     Events: { MessageCreate },
-    ContextMenuCommandAssertions,
-} = require('discord.js');
+    userMention,
+} = require("discord.js");
 
 module.exports = {
     name: MessageCreate,
@@ -26,8 +26,7 @@ module.exports = {
 
         if (
             !message.content.startsWith(prefix) &&
-            message.content.slice(0, client.user.id.length + 3) !==
-                `<@${client.user.id}>`
+            message.content.startsWith(userMention(client.user.id))
         )
             return;
 
@@ -68,7 +67,7 @@ module.exports = {
             command.execute(message, args, client, db);
         } catch (err) {
             console.error(err);
-            message.reply('there was an error trying to execute that command!');
+            message.reply("there was an error trying to execute that command!");
         }
     },
 };
