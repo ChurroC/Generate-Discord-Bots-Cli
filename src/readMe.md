@@ -32,7 +32,7 @@ subcommandGroup needed
 if bot couldnt join vc reply with error
 maybe fix deepreaddir
 tic tac toe image cnavas eddito using nap thing
-have an all command command
+have an all command command taht has button with pagination and a sleect menu for catgeories which you could add to command as another objext
 
 for voice use musicxmatch and add mpagination in yshowign music
 have a command to amke embed with lyrics take up whole screen maybe change absed of phoen or computer
@@ -40,3 +40,5 @@ maybe have splti screen transalation
 make lyrics enable button disabled when no lyrics for current song or have it enabled and display no lyrics
 aslo have a select menu for all, lyrics, next up, current song
 have a .notCommand.js to show not command
+
+also if they cant join the vc because of permission send an error
