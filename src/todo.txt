@@ -5,3 +5,5 @@ Destructuring parmaeteres when getting execute command
 For ending with fileName.subcommand.js those shoudl not be command and should be subcommands
 
 add sodium for discord vc
+
+figrue out what the heck is happenign with console.error

@@ -3,10 +3,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const deepReadDir = require("./utils/deepReadDir");
 const path = require("path");
 require("./utils/modelSetCustomIdOverride")();
-console.error("test");
 require("./utils/logErrors")();
-throw new TypeError("Expected a string, but received a number");
-console.log("test");
 
 // Client
 // This is the client that will be used to interact with the Discord API.

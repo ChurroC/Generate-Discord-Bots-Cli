@@ -24,11 +24,7 @@ module.exports = {
         }
         const prefix = message.guild.prefix;
 
-        if (
-            !message.content.startsWith(prefix) &&
-            message.content.startsWith(userMention(client.user.id))
-        )
-            return;
+        if (!message.content.startsWith(prefix) && message.content.startsWith(userMention(client.user.id))) return;
 
         if (message.content === `<@${client.user.id}>`) {
             return message.reply(`The prefix is ${prefix}`);
@@ -64,7 +60,7 @@ module.exports = {
         if (!command) return;
 
         try {
-            command.execute(message, args, client, db);
+            await command.execute(message, args, client, db);
         } catch (err) {
             console.error(err);
             message.reply("there was an error trying to execute that command!");
