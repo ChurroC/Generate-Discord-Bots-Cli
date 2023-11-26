@@ -1,0 +1,2 @@
+Talk about how console.error will end logging the error and putting into log
+If you do want an error to stop exectution you can throw but error will allow bot to keep running but still in log.
