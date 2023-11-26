@@ -1,0 +1,21 @@
+module.exports = {
+    name: ["name1", "name-2"],  Slash command names must be between 1-32 characters and contain no capital letters, spaces, or symbols other than - and _
+    description: "Decription of slash command.",
+    async execute({message, args, client, db}) {
+        message.reply(
+            `Pong!\nLatency is ${
+                Date.now() - message.createdTimestamp
+            }ms. API Latency is ${Math.round(client.ws.ping)}ms`
+        );
+        await db.member.update({
+            where: {
+                memberId: message.member.id,
+            },
+            data: {
+                pingCount: {
+                    increment: 1,
+                },
+            },
+        });
+    },
+};

@@ -6,18 +6,27 @@ generator client {
 }
 
 datasource db {
-    provider = "mongodb"
+    provider = "mysql"
     url      = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 model Guild {
-    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    id        Int      @id @default(autoincrement())
     guildId String @unique
     prefix  String @default("!")
 }
 
 model Member {
-    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    id        Int      @id @default(autoincrement())
     memberId  String @unique
     pingCount Int    @default(0)
+}
+
+model Ping {
+    id        Int      @id @default(autoincrement())
+    memberId  String
+    guildId   String
+    pingCount Int
+    createdAt DateTime @default(now())
 }

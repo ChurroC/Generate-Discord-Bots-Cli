@@ -1,0 +1,19 @@
+{
+    "trailingComma": "es5",
+    "printWidth": 120,
+    "proseWrap": "always",
+    "tabWidth": 4,
+    "editor.formatOnSave": true,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

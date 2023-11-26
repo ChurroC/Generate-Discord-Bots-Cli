@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "displayDb": "prisma studio",
-    "updateDb": "prisma generate",
+    "updateDb": "prisma db push",
     "start": "pm2 start index.js",
     "deploy": "pm2 start deploy-commands.js",
-    "fullStart": "npm run deploy && npm run start",
-    "updateDbDev": "nodemon -e * --watch prisma --exec \"prisma generate\"",
+    "fullStart": "pm2 run deploy && pm2 run start",
+    "updateDbDev": "nodemon --ext '*' --watch prisma --exec \"prisma generate\"",
     "dev": "nodemon -r dotenv/config index.js",
     "deployDev": "nodemon --watch slashCommands --watch deploy-commands.js -r dotenv/config deploy-commands.js",
     "fullDevStart": "concurrently \"npm run updateDbDev\" \"npm run deployDev\" \"npm run dev\""
@@ -20,10 +20,12 @@
     "start": "Starts the bot",
     "deploy": "Deploys the slash commands",
     "fullStart": "Deploys the slash commands and starts the bot",
-    "updateDbDev": "This will update the database when you change the prisma scheme with nodemon (DEV)",
-    "dev": "Starts the bot with nodemon (DEV)",
-    "deployDev": "Deploys the slash commands with nodemon (DEV)",
-    "fullDevStart": "Deploys the slash commands and starts the bot with nodemon and updates database (DEV)"
+    "devSection": {
+      "updateDbDev": "This will update the database when you change the prisma scheme with nodemon",
+      "dev": "Starts the bot with nodemon",
+      "deployDev": "Deploys the slash commands with nodemon",
+      "fullDevStart": "Deploys the slash commands and starts the bot with nodemon and updates database"
+    }
   },
   "repository": {
     "type": "git",
@@ -38,16 +40,16 @@
   "homepage": "https://github.com/ChurroC/Discord-Bot-Template#readme",
   "dependencies": {
     "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.14.0",
-    "@prisma/client": "^4.10.1",
-    "discord.js": "^14.7.1",
-    "pm2": "^5.2.2",
-    "sodium": "^3.0.2"
+    "@discordjs/voice": "^0.16.1",
+    "@prisma/client": "^5.6.0",
+    "discord.js": "^14.14.1",
+    "pm2": "^2.10.4"
   },
   "devDependencies": {
-    "concurrently": "^7.6.0",
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.20",
-    "prisma": "^4.10.1"
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.1.0",
+    "prisma": "^5.6.0"
   }
 }

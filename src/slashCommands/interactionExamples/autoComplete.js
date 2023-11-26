@@ -4,17 +4,9 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("guide")
         .setDescription("Search discordjs.guide!")
+        .addStringOption(option => option.setName("query").setDescription("Phrase to search for").setAutocomplete(true))
         .addStringOption(option =>
-            option
-                .setName("query")
-                .setDescription("Phrase to search for")
-                .setAutocomplete(true)
-        )
-        .addStringOption(option =>
-            option
-                .setName("version-for-query")
-                .setDescription("Phrase to search for")
-                .setAutocomplete(true)
+            option.setName("version-for-query").setDescription("Phrase to search for").setAutocomplete(true)
         ),
     async execute(interaction) {
         interaction.reply("Autocomplete done!");

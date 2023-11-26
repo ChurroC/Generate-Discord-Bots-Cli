@@ -4,10 +4,8 @@ module.exports = {
     async execute(message, args, client, db) {
         const newPrefix = args[0];
 
-        if (!newPrefix || newPrefix == message.guild.prefix)
-            return message.reply('You must specify a new prefix!');
-        if (newPrefix.length > 3)
-            return message.reply('The prefix must be less than 3 characters!');
+        if (!newPrefix || newPrefix == message.guild.prefix) return message.reply('You must specify a new prefix!');
+        if (newPrefix.length > 3) return message.reply('The prefix must be less than 3 characters!');
 
         await db.guild.update({
             where: {

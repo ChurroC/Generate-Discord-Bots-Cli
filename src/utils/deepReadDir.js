@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 
-// Exclude dirs and files should have regexes
-// Or have a sorting function as a parameter
-// For ending with fileName.subcommand.js those shoudl not be command and should be subcommands
-module.exports = function deepReadDir(dirName) {
+module.exports = function deepReadDir(dirName, ...dirExcludesRegexes) {
     let files = [];
     fs.readdirSync(dirName, { withFileTypes: true }).forEach(item => {
+        for (const dirExcludeRegex of dirExcludesRegexes) {
+            if (new RegExp(dirExcludeRegex).test(item.name)) return;
+        }
+
         if (item.isDirectory()) {
             files = [...files, ...deepReadDir(path.join(dirName, item.name))];
         } else {
