@@ -8,11 +8,7 @@ module.exports = {
                 client.ws.ping
             )}ms`
         );
-        try {
-            test.reply("bhj");
-        } catch (err) {
-            message.reply("error from command itself that it specific to this comamnd");
-        }
+        test.reply("bhj");
         db.member.update({
             where: {
                 memberId: message.member.id,
