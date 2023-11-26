@@ -6,4 +6,6 @@ For ending with fileName.subcommand.js those shoudl not be command and should be
 
 add sodium for discord vc
 
-figrue out what the heck is happenign with console.error
+Make console.error with pino maybe
+Get interagction create with with try and catches not only message create
+get error to come out in standard time since local time can be switches with servers like vercel which switch often
