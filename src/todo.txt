@@ -3,6 +3,8 @@ Like create a new folder then make first file called info.js call next one info.
 
 in subcommand.js add make jsut info with a subcommand not group for youself.
 
+in toCamelCase.js just givde defualt param to spread array 
+
 Make both /info, !info, and @testbot give info
 
 Destructuring parmaeteres when getting execute command
