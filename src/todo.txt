@@ -1,3 +1,5 @@
+Maybe make subcommand with folder. Like the foldername with command name is a subcommand. Or command.subcommand folder is a subcommand fodler.
+
 Make both /info, !info, and @testbot give info
 
 Destructuring parmaeteres when getting execute command
