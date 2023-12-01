@@ -1,6 +1,8 @@
 Maybe make subcommand with folder. Like the foldername with command name is a subcommand. Or command.subcommand folder is a subcommand fodler.\
 Like create a new folder then make first file called info.js call next one info.user.js or
 
+in subcommand.js add make jsut info with a subcommand not group for youself.
+
 Make both /info, !info, and @testbot give info
 
 Destructuring parmaeteres when getting execute command
