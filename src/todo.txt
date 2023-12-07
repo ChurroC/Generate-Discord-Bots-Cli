@@ -1,3 +1,6 @@
+with readdir recursivley instead of just saying one folde rot not be recognized isnetad use a refedit for all with -no or something like that.
+
+
 have comamnd name as a paramter for all the interacitons since they all have the same code.
 
 
