@@ -68,3 +68,8 @@ aslo have a select menu for all, lyrics, next up, current song
 have a .notCommand.js to show not command
 
 also if they cant join the vc because of permission send an error
+
+
+add a auto webpage included maybe
+
+also create mdx with next to have docs
